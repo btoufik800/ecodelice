@@ -1,0 +1,78 @@
+/* Styles complémentaires pour l'espace admin React */
+
+.admin-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,.06);
+  text-align: center;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .9rem;
+}
+.admin-table th {
+  text-align: left;
+  padding: .8rem .6rem;
+  background: #f5f7f3;
+  color: var(--text-med);
+  font-weight: 700;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  border-bottom: 2px solid #e0e6dd;
+}
+.admin-table td {
+  padding: .8rem .6rem;
+  border-bottom: 1px solid #f0f2ec;
+  vertical-align: middle;
+}
+.admin-table tr:hover td { background: #fafbf8; }
+
+.btn-tiny {
+  display: inline-block;
+  padding: .35rem .7rem;
+  background: var(--primary-xlight);
+  color: var(--primary-dark);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: all .2s;
+}
+.btn-tiny:hover { background: var(--primary); color: #fff; }
+.btn-tiny-danger {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #ef4444;
+}
+.btn-tiny-danger:hover { background: #ef4444; color: #fff; }
+
+.statut-select {
+  padding: .35rem .5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: .85rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.statut-badge {
+  display: inline-block;
+  padding: .25rem .65rem;
+  border-radius: 12px;
+  font-size: .73rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  font-family: 'Montserrat', sans-serif;
+}
+.statut-en_attente    { background: #fef3c7; color: #92400e; }
+.statut-confirmee     { background: #dbeafe; color: #1e40af; }
+.statut-en_preparation{ background: #ede9fe; color: #5b21b6; }
+.statut-expedie       { background: #cffafe; color: #155e75; }
+.statut-livree        { background: #d1fae5; color: #065f46; }
+.statut-annulee       { background: #fee2e2; color: #991b1b; }
