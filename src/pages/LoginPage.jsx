@@ -13,10 +13,10 @@ export default function LoginPage() {
     e.preventDefault();
     setBusy(true); setFlash(null);
     const fd = new FormData(e.currentTarget);
-    const user = await login(fd.get('email'), fd.get('password'));
+    const r = await login(fd.get('email'), fd.get('password'));
     setBusy(false);
-    if (!user) setFlash({ type: 'error', msg: 'Adresse courriel ou mot de passe incorrect.' });
-    else show(`Bon retour, ${user.prenom} !`, 'ok');
+    if (r.ok) show(`Bon retour, ${r.user.prenom} !`, 'ok');
+    else setFlash({ type: 'error', msg: r.message || 'Erreur de connexion.' });
   };
 
   const onRegister = async (e) => {
@@ -28,10 +28,10 @@ export default function LoginPage() {
       setBusy(false);
       return setFlash({ type: 'error', msg: 'Les mots de passe ne correspondent pas.' });
     }
-    const user = await register(data);
+    const r = await register(data);
     setBusy(false);
-    if (!user) setFlash({ type: 'error', msg: 'Impossible de créer le compte (courriel déjà utilisé ?).' });
-    else show(`Bienvenue ${user.prenom} !`, 'ok');
+    if (r.ok) show(`Bienvenue ${r.user.prenom} !`, 'ok');
+    else setFlash({ type: 'error', msg: r.message || 'Erreur lors de l\'inscription.' });
   };
 
   return (

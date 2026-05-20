@@ -24,38 +24,35 @@ export function AuthProvider({ children }) {
 
   useEffect(() => { refresh(); }, [refresh]);
 
-  /**
-   * Connexion : on poste en form-urlencoded (l'API existante répond par redirection).
-   * Après la requête, on rafraîchit /api/me pour récupérer l'utilisateur.
-   */
+  // Connexion : POST JSON, le backend pose le cookie de session et renvoie l'user
   const login = async (email, password) => {
-    const params = new URLSearchParams();
-    params.append('email', email);
-    params.append('password', password);
-    await api.post('/api/auth/login', params, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      // L'API redirige (3xx) -> on laisse axios suivre, le cookie est posé
-      maxRedirects: 0,
-      validateStatus: (s) => s >= 200 && s < 400,
-    }).catch(() => { /* redirection 3xx attendue */ });
-    const me = await refresh();
-    return me.loggedIn ? me.user : null;
+    try {
+      const { data } = await api.post('/api/auth/login', { email, password });
+      if (data.success) {
+        setUser(data.user);
+        return { ok: true, user: data.user };
+      }
+      return { ok: false, message: data.message };
+    } catch (err) {
+      return { ok: false, message: 'Impossible de joindre le serveur. Vérifiez qu\'il est démarré.' };
+    }
   };
 
   const register = async (form) => {
-    const params = new URLSearchParams();
-    Object.entries(form).forEach(([k, v]) => params.append(k, v ?? ''));
-    await api.post('/api/auth/register', params, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      maxRedirects: 0,
-      validateStatus: (s) => s >= 200 && s < 400,
-    }).catch(() => { /* redirection 3xx attendue */ });
-    const me = await refresh();
-    return me.loggedIn ? me.user : null;
+    try {
+      const { data } = await api.post('/api/auth/register', form);
+      if (data.success) {
+        setUser(data.user);
+        return { ok: true, user: data.user };
+      }
+      return { ok: false, message: data.message };
+    } catch (err) {
+      return { ok: false, message: 'Impossible de joindre le serveur.' };
+    }
   };
 
   const logout = async () => {
-    await api.get('/api/auth/logout').catch(() => {});
+    try { await api.post('/api/auth/logout'); } catch {}
     setUser(null);
   };
 
